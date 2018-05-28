@@ -1,0 +1,9 @@
+[user]
+	name = Suyash Shekhar
+	email = suyashshekhar@gmail.com
+[color]
+	ui = true
+	ui = true
+[core]
+	editor = /usr/bin/vim
+	excludesfile = ~/.gitignore_global
