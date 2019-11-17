@@ -62,6 +62,8 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+export EDITOR='vim'
+
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -98,3 +100,8 @@ eval $(thefuck --alias)
 
 # Enable Direnv
 eval "$(direnv hook zsh)"
+
+# Kill the process using port
+function killport() {
+    kill -9 $(lsof -t -i:"$1")
+}
