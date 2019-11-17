@@ -9,9 +9,17 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdtree'
-Plug 'davidhalter/jedi-vim'
 Plug 'junegunn/fzf'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'tpope/vim-fugitive'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Python LSP
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+
+
 call plug#end()
 
 " start nerd-tree when path is a directory
@@ -20,5 +28,8 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 syntax enable
 set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+
+" Python autocomplete (https://dev.to/zev/how-i-got-go-to-definition-working-in-vim-in-2019-2ec2)
+set tags=tags
+autocmd BufWritePost *.py silent! !ctags -R --python-kinds=-i --languages=python 2&gt; /dev/null &amp;
+
