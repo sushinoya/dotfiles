@@ -1,0 +1,3 @@
+--recurse=yes
+--exclude=dist
+--exclude=.git
