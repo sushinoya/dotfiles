@@ -1,7 +1,7 @@
 # Move all files to home
-mv  vim/.vimrc ~/.vimrc
-mv -r  vim/colors ~/.vim/colors
-mv tmux/.tmux_conf ~/.tmux_conf
+cp  vim/.vimrc ~/.vimrc
+cp -r  vim/colors ~/.vim/colors
+cp tmux/.tmux_conf ~/.tmux_conf
 tmux source-file ~/.tmux.conf
 git config --global core.excludesfile '~/.gitignore_global'
 
