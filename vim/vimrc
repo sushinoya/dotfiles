@@ -1,0 +1,108 @@
+" vim-plug configuration
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+" Themes
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'zacanger/angr.vim'
+let g:airline_theme='angr'
+
+" NERDTree
+Plug 'scrooloose/nerdtree'
+
+let NERDTreeShowHidden=1
+
+" Change root of NERDTree when current directory is changed with :cd
+augroup DIRCHANGE
+    au!
+    autocmd DirChanged global :NERDTreeCWD
+augroup END
+
+" Change current directory with :cd when NERDTree root changes
+let g:NERDTreeChDirMode = 2
+
+" start NERDTree when path is a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * if !argc() | NERDTree | endif
+
+" ignore certain files in nerdtree
+let NERDTreeIgnore = ['\.swp$']
+
+" close NERDTree if it is the last one open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" refresh nerdtree when focused
+" autocmd BufEnter NERD_tree_* | execute 'normal R'
+
+" don't open files in the NerdTree buffer
+nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Rg\<cr>"
+
+
+" Other Plugins
+Plug 'junegunn/fzf'
+Plug 'tpope/vim-fugitive'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Uses C-n instead of Cmd-d, n to go to next word, q to skip over
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" Seamlessly move between tmux and vim
+Plug 'christoomey/vim-tmux-navigator'
+
+" Disabled pymode temporarily
+" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+
+call plug#end()
+
+" Python autocomplete 
+" (https://dev.to/zev/how-i-got-go-to-definition-working-in-vim-in-2019-2ec2)
+" set tags=tags;/
+" autocmd BufWritePost *.py silent! !ctags -R --python-kinds=-i --languages=python 2&gt; /dev/null &amp;
+
+" Backspace
+set backspace=indent,eol,start
+
+" Make system clipboard register default
+set clipboard=unnamed
+
+" Disable Annoying bell
+set belloff=all
+
+" Set Proper Indentation
+set tabstop=4 shiftwidth=4 autoindent smartindent
+
+" Mouse
+set mouse=a
+
+" Change the tilde color to be less prominent
+highlight NonText ctermfg=240
+
+" Move entire line up or down with M+j and M+k
+inoremap <T-j> <Esc>:m+<CR>
+nnoremap <T-k> :m-2<CR>
+nnoremap <T-j> :m+<CR>
+inoremap <T-k> <Esc>:m-2<CR>
+
+" Make C-p do fzf:Rg on current dir
+nnoremap <C-p> :Rg<CR>
+
+" Appearance
+filetype plugin on
+syntax enable
+set background=dark
+colorscheme onehalfdark
+set guifont=Roboto_Mono:h14
+set number
+
+" fzf theming with bat
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid {}'"
